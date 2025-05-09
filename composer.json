@@ -1,0 +1,10 @@
+{
+    "require": {
+        "manticoresoftware/manticoresearch-php": "^4.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
