@@ -20,7 +20,7 @@
 ```bash
 1. Clone the repository or download it as a ZIP:
 
-   git clone https://github.com/your-username/manticore-control-panel.git
+   git clone https://github.com/OnurTasci/ManticoreSearch-Control-Panel.git
 
 3. cd manticore-control-panel
 
