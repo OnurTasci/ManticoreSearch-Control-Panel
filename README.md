@@ -17,14 +17,15 @@
 
 ## Installation
 
+```bash
 1. Clone the repository or download it as a ZIP:
-   ```bash
+
    git clone https://github.com/your-username/manticore-control-panel.git
 
-2. cd manticore-control-panel
+3. cd manticore-control-panel
 
-3. composer update
+4. composer update
 
-4. date the config.php file with your Manticore Search connection settings.
+5. date the config.php file with your Manticore Search connection settings.
 
 ```
