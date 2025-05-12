@@ -6,6 +6,7 @@ include __DIR__ . '/../config.php';
 $table = $_GET['table'];
 
 $tableClient = $client->table($table);
+
 $columnname = $tableClient->describe();
 
 
@@ -40,10 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }else{
 
 
-            $query = $tableClient->search('@'.$column.' "'.$value.'"');
-
-            $results = $query->get();
-
+            $results = $tableClient->search('')
+                ->filter($column, $value)->get();
+            
             foreach($results as $doc) {
                 echo 'ID:'.$doc->getId()."\n";
                 foreach($doc->getData() as $field=>$val)
@@ -85,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$table?> Select</title>
+    <!-- jQuery ekliyoruz -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         form {
