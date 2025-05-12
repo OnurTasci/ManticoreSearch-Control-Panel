@@ -40,11 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tablo Create</title>
+    <!-- jQuery ekliyoruz -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         form {
             max-width: 600px;
-            margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
@@ -90,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <h2 style="text-align: center;">New Table Create</h2>
 
+<div style="display: flex;    justify-content: space-evenly;">
 <form action="create_table.php" method="POST">
     <label for="table_name">Table Name:</label>
     <input type="text" id="table_name" name="table_name" required>
@@ -133,6 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="options" style="display:none;">
                 <label>Indexed:</label>
                 <input type="checkbox" name="columns[0][options][indexed]">
+                <label>Attribute:</label>
+                <input type="checkbox" name="columns[0][options][attribute]">
                 <label>Stored:</label>
                 <input type="checkbox" name="columns[0][options][stored]">
             </div>
@@ -143,10 +146,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit">Create</button>
 </form>
 
+
+<div>
+    <h3>1. <strong>Indexed</strong></h3>
+    <p><strong>What does it do?</strong></p>
+    <ul>
+        <li>
+            <p>Required for full-text searching (i.e. <code>MATCH()</code> or <code>search()</code> function).</p>
+        </li>
+        <li>
+            <p>Used for texts to be searched, such as a blog title or description.</p>
+        </li>
+    </ul>
+    <h3>2. <strong>Attribute</strong></h3>
+    <p><strong>What does it do?</strong></p>
+    <ul>
+        <li>
+            <p><code>WHERE</code>, <code>ORDER BY</code>, <code>GROUP BY</code>, <code>filter()</code>, <code>sort()</code>, <code>facets()</code> are used for structures such as.</p>
+        </li>
+        <li>
+            <p>Suitable for numerical values, categories, dates, etc.</p>
+        </li>
+    </ul>
+    <h3>3. <strong>Stored</strong></h3>
+    <p><strong>What is it for?</strong></p>
+    <ul>
+        <li>
+            <p>These are the fields that are desired to be returned in the query result.</p>
+        </li>
+        <li>
+            <p>In other words, the fields that are desired to be shown to the user but are not used in the queries.</p>
+        </li>
+    </ul>
+
+</div>
+</div>
 <script>
     $(document).ready(function() {
         let columnIndex = 1;
 
+        // Yeni kolon ekleme fonksiyonu
         $('#add-column-btn').click(function() {
             const newColumnDiv = $(`
                 <div class="column">
@@ -185,6 +224,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="options" style="display:none;">
                         <label>Indexed:</label>
                         <input type="checkbox" name="columns[${columnIndex}][options][indexed]">
+                        <label>Attribute:</label>
+                        <input type="checkbox" name="columns[${columnIndex}][options][attribute]">
                         <label>Stored:</label>
                         <input type="checkbox" name="columns[${columnIndex}][options][stored]">
                     </div>
@@ -206,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 columnDiv.find('.vector-options').hide();
             }
 
-            if (selectedType === "string") {
+            if (selectedType === "text" || selectedType === "string") {
                 columnDiv.find('.options').show();
             } else {
                 columnDiv.find('.options').hide();
