@@ -59,10 +59,12 @@ $response = $notes->tables();
 <h2 style="text-align: center;">ManticoreSearch Control Panel</h2>
 
 
+<!-- Tabloları listeleyelim -->
 <table>
     <thead>
     <tr>
         <th>Table Name</th>
+        <th>Total Row</th>
         <th>Table Type</th>
         <th>Table Describe</th>
         <th style=" min-width: 400px; ">Options</th>
@@ -77,9 +79,14 @@ $response = $notes->tables();
         ];
         $columnname = $client->tables()->describe($params);
 
+        $tableClient = $client->table($table['Table']);
+        $total = $tableClient->status();
+
+
         ?>
         <tr>
             <td><?php echo $table['Table']; ?></td>
+            <td><?php echo $total['indexed_documents']; ?></td>
             <td><?php echo $table['Type']; ?></td>
             <td><?php
 
